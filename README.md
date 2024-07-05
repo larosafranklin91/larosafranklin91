@@ -1,54 +1,32 @@
-## Teste para Desenvolvedor PHP/Laravel
+## Inicializando o projeto
 
-Bem-vindo ao teste de desenvolvimento para a posição de Desenvolvedor PHP/Laravel. 
+- Faça o clone do projeto utilizando o comando: git clone
 
-O objetivo deste teste é desenvolver uma API Rest para o cadastro de fornecedores, permitindo a busca por CNPJ ou CPF, utilizando Laravel no backend.
+- Apos baixar o projeto utilize o comando: composer update
 
-## Descrição do Projeto
+- Depois de baixar as dependencias, utilize o comando: php artisan migrate --seed
 
-### Backend (API Laravel):
+- Após rodar as migrates voce deve rodar o comando: php artisan passport:install
 
-#### CRUD de Fornecedores:
-- **Criar Fornecedor:**
-  - Permita o cadastro de fornecedores usando CNPJ ou CPF, incluindo informações como nome/nome da empresa, contato, endereço, etc.
-  - Valide a integridade e o formato dos dados, como o formato correto de CNPJ/CPF e a obrigatoriedade de campos.
+- Para finalizar a inicializacao do server rode o comando: php artisan serve
 
-- **Editar Fornecedor:**
-  - Facilite a atualização das informações de fornecedores, mantendo a validação dos dados.
+- Voce ja esta pronto para utilzar a api.
 
-- **Excluir Fornecedor:**
-  - Possibilite a remoção segura de fornecedores.
+## Utilizando as Api's
 
-- **Listar Fornecedores:**
-  - Apresente uma lista paginada de fornecedores, com filtragem e ordenação.
+- Existem um crude de fornecedor, localizado no host http://127.0.0.1:8000
 
-#### Migrations:
-- Utilize migrations do Laravel para definir a estrutura do banco de dados, garantindo uma boa organização e facilidade de manutenção.
+- Para ter acesso a api voce deve logar e obter um token, nesse momento voce deve abri seu postman ou outro software de sua preferencia para acessar a api.
 
-## Requisitos
+- No host: http://127.0.0.1:8000/api/login acrescente ao body as credenciais que voce vai encontrar no no seeder NewUserSeeder.
 
-### Backend:
-- Implementar busca por CNPJ na [BrasilAPI](https://brasilapi.com.br/docs#tag/CNPJ/paths/~1cnpj~1v1~1{cnpj}/get) ou qualquer outro endpoint público.
+- Apos logar e adiquirir seu token. copie o access_token e voce ja esta pronto para autenticar e seguir em frente.
 
-## Tecnologias a serem utilizadas
-- Framework Laravel (PHP) 9.x ou superior
-- MySQL ou Postgres
+## Apis disponiveis
 
-## Critérios de Avaliação
-- Adesão aos requisitos funcionais e técnicos.
-- Qualidade do código, incluindo organização, padrões de desenvolvimento e segurança.
-- Documentação do projeto, incluindo um README detalhado com instruções de instalação e operação.
-
-## Bônus
-- Implementação de Repository Pattern.
-- Implementação de testes automatizados.
-- Dockerização do ambiente de desenvolvimento.
-- Implementação de cache para otimizar o desempenho.
-
-## Entrega
-- Para iniciar o teste, faça um fork deste repositório; Se você apenas clonar o repositório não vai conseguir fazer push.
-- Crie uma branch com o nome que desejar;
-- Altere o arquivo README.md com as informações necessárias para executar o seu teste (comandos, migrations, seeds, etc);
-- Depois de finalizado, envie-nos o pull request;
+- Get: http://127.0.0.1:8000/api/suppliers?page=1&per_page=10&order=asc
+- Post: http://127.0.0.1:8000/api/suppliers
+- Get: http://127.0.0.1:8000/api/suppliers/:supplier
+- Delete: http://127.0.0.1:8000/api/suppliers/:supplier
 
 

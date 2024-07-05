@@ -1,5 +1,6 @@
 <?php
 
+use App\Http\Controllers\Api\SupplierController;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 
@@ -14,8 +15,13 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
-Route::middleware('auth')->get('/user', function (Request $request) {
-    return $request->user();
+Route::post('/login', 'App\Http\Controllers\Api\AuthController@login');
+
+Route::middleware('auth:api')->group(function () {
+    
+    Route::apiResource('suppliers', SupplierController::class)->names('suppliers');
+
+    Route::post('/logout', 'App\Http\Controllers\Api\AuthController@logout');
 });
 
 
