@@ -67,8 +67,8 @@
                 showCancelButton: true,
                 confirmButtonColor: '#3085d6',
                 cancelButtonColor: '#d33',
-                cancelButtonText: 'Cancel',
-                confirmButtonText: 'Yes, delete it!',
+                cancelButtonText: 'Cancelar',
+                confirmButtonText: 'Sim, delete!',
                 reverseButtons: true
             }).then(function(response) {
                 if (response.value) {
