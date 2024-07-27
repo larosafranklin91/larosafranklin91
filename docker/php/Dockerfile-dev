@@ -1,0 +1,55 @@
+FROM php:8.1.0-fpm-alpine3.14
+
+LABEL Maintainer="Pablo Ramires Silva <https://github.com/ramirespoa>" \
+    Description="PHP-FPM v8.1 on top of Alpine Linux for teste PHP."
+
+# Instalar dependências
+RUN apk add --no-cache \
+    freetype-dev \
+    libjpeg-turbo-dev \
+    libpng-dev \
+    libzip-dev \
+    zlib-dev \
+    curl \
+    nodejs \
+    npm \
+    make \
+    g++ \
+    autoconf \
+    postgresql-dev \
+    zip
+
+# Instalar extensões do PHP
+RUN docker-php-ext-install -j$(nproc) \
+    pdo_mysql \
+    pdo_pgsql \
+    pgsql \
+    zip \
+    pcntl
+
+RUN set -eux \
+    && docker-php-source extract \
+    && apk add --no-cache --virtual .build-deps \
+        freetype \
+        libjpeg-turbo \
+        libpng \
+        libwebp \
+    && apk add --no-cache \
+        freetype-dev \
+        libjpeg-turbo-dev \
+        libpng-dev \
+        libwebp-dev \
+    && docker-php-ext-configure gd \
+        --with-freetype \
+        --with-jpeg \
+        --with-webp \
+    && docker-php-ext-install -j$(nproc) gd \
+    && apk del .build-deps \
+    && docker-php-source delete
+
+# Instalar a versão mais recente do Composer
+RUN curl -sS https://getcomposer.org/installer | php -- --install-dir=/usr/local/bin --filename=composer
+
+WORKDIR /var/www/html
+
+CMD ["php-fpm"]

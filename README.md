@@ -1,54 +1,27 @@
-## Teste para Desenvolvedor PHP/Laravel
 
-Bem-vindo ao teste de desenvolvimento para a posição de Desenvolvedor PHP/Laravel. 
+## prova de conhecimentos
 
-O objetivo deste teste é desenvolver uma API Rest para o cadastro de fornecedores, permitindo a busca por CNPJ ou CPF, utilizando Laravel no backend.
+Comandos importantes:
 
-## Descrição do Projeto
+    1) clonar projeto github
+    2) criar/ajustar .ENV file de acordo com env.example do projeto
+    3) acessar pasta onde o projeto está clonado via CMD
+    4) validar arquivo docker-compose.yml presente no projeto
+    5) acessando a pasta / do projeto clonado, rode: docker-compose -f docker-compose.yml up -d
+    6) se tudo der sucesso, via docker desktop acesse o container / webserver (open terminal)
+    7) composer install -vvv
+    8) chmod -R 777 storage/
+    9) php artisan migrate
+    9) se migrate falhar, rodar comando: /sbin/ip route|awk '/default/ { print $3 }'
+    10) substituir se migrate falhar o ip do virtual host no valor DB_HOST do .env
 
-### Backend (API Laravel):
+Variáveis do .env de valores únicos dentro do DOCKER 
 
-#### CRUD de Fornecedores:
-- **Criar Fornecedor:**
-  - Permita o cadastro de fornecedores usando CNPJ ou CPF, incluindo informações como nome/nome da empresa, contato, endereço, etc.
-  - Valide a integridade e o formato dos dados, como o formato correto de CNPJ/CPF e a obrigatoriedade de campos.
+    DB_HOST
+    DB_PORT
+    DB_DATABASE
+    WEBSERVER_HOST_PORT
+    DB_HOST_PORT
 
-- **Editar Fornecedor:**
-  - Facilite a atualização das informações de fornecedores, mantendo a validação dos dados.
-
-- **Excluir Fornecedor:**
-  - Possibilite a remoção segura de fornecedores.
-
-- **Listar Fornecedores:**
-  - Apresente uma lista paginada de fornecedores, com filtragem e ordenação.
-
-#### Migrations:
-- Utilize migrations do Laravel para definir a estrutura do banco de dados, garantindo uma boa organização e facilidade de manutenção.
-
-## Requisitos
-
-### Backend:
-- Implementar busca por CNPJ na [BrasilAPI](https://brasilapi.com.br/docs#tag/CNPJ/paths/~1cnpj~1v1~1{cnpj}/get) ou qualquer outro endpoint público.
-
-## Tecnologias a serem utilizadas
-- Framework Laravel (PHP) 9.x ou superior
-- MySQL ou Postgres
-
-## Critérios de Avaliação
-- Adesão aos requisitos funcionais e técnicos.
-- Qualidade do código, incluindo organização, padrões de desenvolvimento e segurança.
-- Documentação do projeto, incluindo um README detalhado com instruções de instalação e operação.
-
-## Bônus
-- Implementação de Repository Pattern.
-- Implementação de testes automatizados.
-- Dockerização do ambiente de desenvolvimento.
-- Implementação de cache para otimizar o desempenho.
-
-## Entrega
-- Para iniciar o teste, faça um fork deste repositório; Se você apenas clonar o repositório não vai conseguir fazer push.
-- Crie uma branch com o nome que desejar;
-- Altere o arquivo README.md com as informações necessárias para executar o seu teste (comandos, migrations, seeds, etc);
-- Depois de finalizado, envie-nos o pull request;
-
-
+PS:. Atenção ao arquivo: docker-compose.yml para o campo "ports" estar com mesmos valores do .env
+    
