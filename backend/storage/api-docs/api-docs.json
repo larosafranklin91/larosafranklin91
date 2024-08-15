@@ -1,0 +1,944 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentação API Fornecedores",
+        "description": "Documentação da API. Essa API permite gerenciar fornecedores, incluindo criar, atualizar, e recuperação dos dados.",
+        "termsOfService": "#",
+        "contact": {
+            "name": "API Support",
+            "url": "#",
+            "email": "support@example.com"
+        },
+        "license": {
+            "name": "MIT License",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/suppliers": {
+            "get": {
+                "tags": [
+                    "Suppliers"
+                ],
+                "summary": "List all suppliers",
+                "operationId": "43efd859bdde27a9e53c0afbe0891731",
+                "parameters": [
+                    {
+                        "name": "filter",
+                        "in": "query",
+                        "description": "Filter suppliers by criteria",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "type": "array",
+                                    "items": {
+                                        "$ref": "#/components/schemas/Supplier"
+                                    }
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Invalid request"
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Suppliers"
+                ],
+                "summary": "Create a new supplier",
+                "operationId": "c1ee06af9e1f197a4aa49c1dd74c981c",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/CreateSupplierRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "Supplier created successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Supplier"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error while creating Supplier"
+                    }
+                }
+            }
+        },
+        "/api/suppliers/{id}": {
+            "get": {
+                "tags": [
+                    "Suppliers"
+                ],
+                "summary": "Get a supplier by ID",
+                "operationId": "6be0f2389de5f1d79708c391d4cb0156",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Supplier ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Successful operation",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Supplier"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Supplier not found"
+                    },
+                    "500": {
+                        "description": "Error while searching Supplier"
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Suppliers"
+                ],
+                "summary": "Update a supplier by ID",
+                "operationId": "837f3815469c658c6255d5037dc09f5c",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Supplier ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/UpdateSupplierRequest"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Supplier updated successfully",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "$ref": "#/components/schemas/Supplier"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Error while updating Supplier"
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Suppliers"
+                ],
+                "summary": "Delete a supplier by ID",
+                "operationId": "4498097c7247888776baa62b3ff682c5",
+                "parameters": [
+                    {
+                        "name": "id",
+                        "in": "path",
+                        "description": "Supplier ID",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Supplier deleted successfully"
+                    },
+                    "500": {
+                        "description": "Error while deleting Supplier"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "CreateSupplierRequest": {
+                "title": "Create Supplier Request",
+                "description": "Request payload for creating a new supplier",
+                "required": [
+                    "name",
+                    "type",
+                    "company_industry",
+                    "phone",
+                    "address",
+                    "cep",
+                    "number",
+                    "neighborhood",
+                    "city",
+                    "state"
+                ],
+                "properties": {
+                    "name": {
+                        "description": "Name of the supplier",
+                        "type": "string",
+                        "maxLength": 100,
+                        "example": "Acme Corp"
+                    },
+                    "type": {
+                        "description": "Type of supplier, either 'Pessoa Física' or 'Pessoa Jurídica'",
+                        "type": "string",
+                        "enum": [
+                            "Pessoa Física",
+                            "Pessoa Jurídica"
+                        ],
+                        "example": "Pessoa Jurídica"
+                    },
+                    "cnpj": {
+                        "description": "CNPJ number (required if type is 'Pessoa Jurídica')",
+                        "type": "string",
+                        "maxLength": 14,
+                        "example": "12345678000195"
+                    },
+                    "cpf": {
+                        "description": "CPF number (required if type is 'Pessoa Física')",
+                        "type": "string",
+                        "maxLength": 11,
+                        "example": "12345678901",
+                        "nullable": true
+                    },
+                    "company_industry": {
+                        "description": "Industry sector of the company",
+                        "type": "string",
+                        "maxLength": 100,
+                        "example": "Technology"
+                    },
+                    "phone": {
+                        "description": "Phone number of the supplier",
+                        "type": "string",
+                        "maxLength": 11,
+                        "example": "11987654321"
+                    },
+                    "address": {
+                        "description": "Address of the supplier",
+                        "type": "string",
+                        "maxLength": 100,
+                        "example": "Rua Exemplo"
+                    },
+                    "cep": {
+                        "description": "Postal code of the supplier's address",
+                        "type": "string",
+                        "maxLength": 8,
+                        "example": "12345678"
+                    },
+                    "number": {
+                        "description": "House or building number of the supplier's address",
+                        "type": "string",
+                        "maxLength": 5,
+                        "example": "123"
+                    },
+                    "complement": {
+                        "description": "Address complement, such as apartment number",
+                        "type": "string",
+                        "maxLength": 50,
+                        "example": "Apto 101",
+                        "nullable": true
+                    },
+                    "neighborhood": {
+                        "description": "Neighborhood of the supplier's address",
+                        "type": "string",
+                        "maxLength": 50,
+                        "example": "Centro"
+                    },
+                    "city": {
+                        "description": "City of the supplier's address",
+                        "type": "string",
+                        "maxLength": 50,
+                        "example": "São Paulo"
+                    },
+                    "state": {
+                        "description": "State of the supplier's address",
+                        "type": "string",
+                        "enum": [
+                            "AC",
+                            "AL",
+                            "AP",
+                            "AM",
+                            "BA",
+                            "CE",
+                            "DF",
+                            "ES",
+                            "GO",
+                            "MA",
+                            "MT",
+                            "MS",
+                            "MG",
+                            "PA",
+                            "PB",
+                            "PR",
+                            "PE",
+                            "PI",
+                            "RJ",
+                            "RN",
+                            "RS",
+                            "RO",
+                            "RR",
+                            "SC",
+                            "SP",
+                            "SE",
+                            "TO"
+                        ],
+                        "example": "SP"
+                    }
+                },
+                "type": "object"
+            },
+            "ListSuppliersRequest": {
+                "title": "List Suppliers Request",
+                "description": "Request payload for listing suppliers with optional filters and sorting",
+                "properties": {
+                    "filter_by": {
+                        "description": "Field to filter the suppliers by",
+                        "type": "string",
+                        "enum": [
+                            "name",
+                            "type",
+                            "cnpj",
+                            "cpf",
+                            "company_industry",
+                            "phone",
+                            "address",
+                            "cep",
+                            "number",
+                            "complement",
+                            "neighborhood",
+                            "city",
+                            "state"
+                        ],
+                        "example": "name",
+                        "nullable": true
+                    },
+                    "filter_value": {
+                        "description": "Value to filter the selected field by",
+                        "type": "string",
+                        "minLength": 2,
+                        "example": "Acme Corp",
+                        "nullable": true
+                    },
+                    "sort_by": {
+                        "description": "Field to sort the suppliers by",
+                        "type": "string",
+                        "enum": [
+                            "name",
+                            "type",
+                            "cnpj",
+                            "cpf",
+                            "company_industry",
+                            "phone",
+                            "address",
+                            "cep",
+                            "number",
+                            "complement",
+                            "neighborhood",
+                            "city",
+                            "state"
+                        ],
+                        "example": "name",
+                        "nullable": true
+                    },
+                    "direction": {
+                        "description": "Sort direction, either ascending (asc) or descending (desc)",
+                        "type": "string",
+                        "enum": [
+                            "asc",
+                            "desc"
+                        ],
+                        "example": "asc",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "UpdateSupplierRequest": {
+                "title": "Update Supplier Request",
+                "description": "Request payload for updating an existing supplier",
+                "properties": {
+                    "name": {
+                        "description": "Name of the supplier",
+                        "type": "string",
+                        "maxLength": 100,
+                        "example": "Acme Corp",
+                        "nullable": true
+                    },
+                    "type": {
+                        "description": "Type of supplier, either 'Pessoa Física' or 'Pessoa Jurídica'",
+                        "type": "string",
+                        "enum": [
+                            "Pessoa Física",
+                            "Pessoa Jurídica"
+                        ],
+                        "example": "Pessoa Jurídica",
+                        "nullable": true
+                    },
+                    "cnpj": {
+                        "description": "CNPJ number",
+                        "type": "string",
+                        "maxLength": 14,
+                        "example": "12345678000195",
+                        "nullable": true
+                    },
+                    "cpf": {
+                        "description": "CPF number",
+                        "type": "string",
+                        "maxLength": 11,
+                        "example": "12345678901",
+                        "nullable": true
+                    },
+                    "company_industry": {
+                        "description": "Industry sector of the company",
+                        "type": "string",
+                        "maxLength": 100,
+                        "example": "Technology",
+                        "nullable": true
+                    },
+                    "phone": {
+                        "description": "Phone number of the supplier",
+                        "type": "string",
+                        "maxLength": 11,
+                        "example": "11987654321",
+                        "nullable": true
+                    },
+                    "address": {
+                        "description": "Address of the supplier",
+                        "type": "string",
+                        "maxLength": 100,
+                        "example": "Rua Exemplo",
+                        "nullable": true
+                    },
+                    "cep": {
+                        "description": "Postal code of the supplier's address",
+                        "type": "string",
+                        "maxLength": 8,
+                        "example": "12345678",
+                        "nullable": true
+                    },
+                    "number": {
+                        "description": "House or building number of the supplier's address",
+                        "type": "string",
+                        "maxLength": 5,
+                        "example": "123",
+                        "nullable": true
+                    },
+                    "complement": {
+                        "description": "Address complement, such as apartment number",
+                        "type": "string",
+                        "maxLength": 50,
+                        "example": "Apto 101",
+                        "nullable": true
+                    },
+                    "neighborhood": {
+                        "description": "Neighborhood of the supplier's address",
+                        "type": "string",
+                        "maxLength": 50,
+                        "example": "Centro",
+                        "nullable": true
+                    },
+                    "city": {
+                        "description": "City of the supplier's address",
+                        "type": "string",
+                        "maxLength": 50,
+                        "example": "São Paulo",
+                        "nullable": true
+                    },
+                    "state": {
+                        "description": "State of the supplier's address",
+                        "type": "string",
+                        "enum": [
+                            "AC",
+                            "AL",
+                            "AP",
+                            "AM",
+                            "BA",
+                            "CE",
+                            "DF",
+                            "ES",
+                            "GO",
+                            "MA",
+                            "MT",
+                            "MS",
+                            "MG",
+                            "PA",
+                            "PB",
+                            "PR",
+                            "PE",
+                            "PI",
+                            "RJ",
+                            "RN",
+                            "RS",
+                            "RO",
+                            "RR",
+                            "SC",
+                            "SP",
+                            "SE",
+                            "TO"
+                        ],
+                        "example": "SP",
+                        "nullable": true
+                    }
+                },
+                "type": "object"
+            },
+            "LegalEntityResource": {
+                "title": "Legal Entity Resource",
+                "description": "Resource representation of a legal entity (empresa ou organização)",
+                "properties": {
+                    "name": {
+                        "description": "Name of the legal entity",
+                        "type": "string",
+                        "example": "Empresa Exemplo Ltda"
+                    },
+                    "cnpj": {
+                        "description": "CNPJ number of the legal entity",
+                        "type": "string",
+                        "example": "12345678000195"
+                    },
+                    "phone": {
+                        "description": "Phone number of the legal entity",
+                        "type": "string",
+                        "example": "11987654321"
+                    },
+                    "address": {
+                        "description": "Address of the legal entity",
+                        "type": "string",
+                        "example": "Avenida Exemplo"
+                    },
+                    "cep": {
+                        "description": "Postal code of the legal entity's address",
+                        "type": "string",
+                        "example": "12345678"
+                    },
+                    "number": {
+                        "description": "Building number of the legal entity's address",
+                        "type": "string",
+                        "example": "1000"
+                    },
+                    "complement": {
+                        "description": "Address complement, such as suite or floor number",
+                        "type": "string",
+                        "example": "Sala 101"
+                    },
+                    "neighborhood": {
+                        "description": "Neighborhood of the legal entity's address",
+                        "type": "string",
+                        "example": "Centro"
+                    },
+                    "city": {
+                        "description": "City of the legal entity's address",
+                        "type": "string",
+                        "example": "São Paulo"
+                    },
+                    "state": {
+                        "description": "State of the legal entity's address",
+                        "type": "string",
+                        "enum": [
+                            "AC",
+                            "AL",
+                            "AP",
+                            "AM",
+                            "BA",
+                            "CE",
+                            "DF",
+                            "ES",
+                            "GO",
+                            "MA",
+                            "MT",
+                            "MS",
+                            "MG",
+                            "PA",
+                            "PB",
+                            "PR",
+                            "PE",
+                            "PI",
+                            "RJ",
+                            "RN",
+                            "RS",
+                            "RO",
+                            "RR",
+                            "SC",
+                            "SP",
+                            "SE",
+                            "TO"
+                        ],
+                        "example": "SP"
+                    }
+                },
+                "type": "object"
+            },
+            "PersonResource": {
+                "title": "Person Resource",
+                "description": "Resource representation of a person",
+                "properties": {
+                    "name": {
+                        "description": "Name of the person",
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "cpf": {
+                        "description": "CPF number of the person",
+                        "type": "string",
+                        "example": "12345678901"
+                    },
+                    "phone": {
+                        "description": "Phone number of the person",
+                        "type": "string",
+                        "example": "11987654321"
+                    },
+                    "address": {
+                        "description": "Address of the person",
+                        "type": "string",
+                        "example": "Rua Exemplo"
+                    },
+                    "cep": {
+                        "description": "Postal code of the person's address",
+                        "type": "string",
+                        "example": "12345678"
+                    },
+                    "number": {
+                        "description": "House or building number of the person's address",
+                        "type": "string",
+                        "example": "123"
+                    },
+                    "complement": {
+                        "description": "Address complement, such as apartment number",
+                        "type": "string",
+                        "example": "Apto 101"
+                    },
+                    "neighborhood": {
+                        "description": "Neighborhood of the person's address",
+                        "type": "string",
+                        "example": "Centro"
+                    },
+                    "city": {
+                        "description": "City of the person's address",
+                        "type": "string",
+                        "example": "São Paulo"
+                    },
+                    "state": {
+                        "description": "State of the person's address",
+                        "type": "string",
+                        "enum": [
+                            "AC",
+                            "AL",
+                            "AP",
+                            "AM",
+                            "BA",
+                            "CE",
+                            "DF",
+                            "ES",
+                            "GO",
+                            "MA",
+                            "MT",
+                            "MS",
+                            "MG",
+                            "PA",
+                            "PB",
+                            "PR",
+                            "PE",
+                            "PI",
+                            "RJ",
+                            "RN",
+                            "RS",
+                            "RO",
+                            "RR",
+                            "SC",
+                            "SP",
+                            "SE",
+                            "TO"
+                        ],
+                        "example": "SP"
+                    }
+                },
+                "type": "object"
+            },
+            "SupplierResource": {
+                "title": "Supplier Resource",
+                "description": "Resource representation of a supplier",
+                "properties": {
+                    "id": {
+                        "description": "Unique identifier of the supplier",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "type": {
+                        "description": "Type of the supplier",
+                        "type": "string",
+                        "enum": [
+                            "Pessoa Física",
+                            "Pessoa Jurídica"
+                        ],
+                        "example": "Pessoa Física"
+                    },
+                    "company_industry": {
+                        "description": "Industry or sector of the supplier's company",
+                        "type": "string",
+                        "example": "Technology"
+                    },
+                    "person": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/PersonResource"
+                            }
+                        ],
+                        "nullable": true,
+                        "description": "Details of the person related to the supplier (if applicable)",
+                        "type": "object"
+                    },
+                    "legalEntity": {
+                        "oneOf": [
+                            {
+                                "$ref": "#/components/schemas/LegalEntityResource"
+                            }
+                        ],
+                        "nullable": true,
+                        "description": "Details of the legal entity related to the supplier (if applicable)",
+                        "type": "object"
+                    }
+                },
+                "type": "object"
+            },
+            "LegalEntity": {
+                "title": "LegalEntity",
+                "description": "Represents a legal entity in the system.",
+                "required": [
+                    "name",
+                    "cnpj",
+                    "phone",
+                    "address",
+                    "cep",
+                    "number",
+                    "neighborhood",
+                    "city",
+                    "state"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Unique identifier of the legal entity.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "Name of the legal entity.",
+                        "type": "string",
+                        "example": "Tech Corp"
+                    },
+                    "cnpj": {
+                        "description": "CNPJ number of the legal entity.",
+                        "type": "string",
+                        "example": "12345678000195"
+                    },
+                    "phone": {
+                        "description": "Phone number of the legal entity.",
+                        "type": "string",
+                        "example": "1234567890"
+                    },
+                    "address": {
+                        "description": "Address of the legal entity.",
+                        "type": "string",
+                        "example": "456 Business Rd"
+                    },
+                    "cep": {
+                        "description": "Postal code (CEP) of the legal entity's address.",
+                        "type": "string",
+                        "example": "12345678"
+                    },
+                    "number": {
+                        "description": "Number of the legal entity's address.",
+                        "type": "string",
+                        "example": "45A"
+                    },
+                    "complement": {
+                        "description": "Additional address information.",
+                        "type": "string",
+                        "example": "Suite 200"
+                    },
+                    "neighborhood": {
+                        "description": "Neighborhood where the legal entity is located.",
+                        "type": "string",
+                        "example": "Business District"
+                    },
+                    "city": {
+                        "description": "City where the legal entity is located.",
+                        "type": "string",
+                        "example": "San Francisco"
+                    },
+                    "state": {
+                        "description": "State where the legal entity is located.",
+                        "type": "string",
+                        "example": "CA"
+                    },
+                    "supplier": {
+                        "$ref": "#/components/schemas/Supplier"
+                    }
+                },
+                "type": "object"
+            },
+            "Person": {
+                "title": "Person",
+                "description": "Represents a person entity in the system.",
+                "required": [
+                    "name",
+                    "cpf",
+                    "phone",
+                    "address",
+                    "cep",
+                    "number",
+                    "neighborhood",
+                    "city",
+                    "state"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Unique identifier of the person.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "name": {
+                        "description": "Name of the person.",
+                        "type": "string",
+                        "example": "John Doe"
+                    },
+                    "cpf": {
+                        "description": "CPF number of the person.",
+                        "type": "string",
+                        "example": "12345678901"
+                    },
+                    "phone": {
+                        "description": "Phone number of the person.",
+                        "type": "string",
+                        "example": "1234567890"
+                    },
+                    "address": {
+                        "description": "Address of the person.",
+                        "type": "string",
+                        "example": "123 Main St"
+                    },
+                    "cep": {
+                        "description": "Postal code (CEP) of the person's address.",
+                        "type": "string",
+                        "example": "12345678"
+                    },
+                    "number": {
+                        "description": "Number of the person's address.",
+                        "type": "string",
+                        "example": "12A"
+                    },
+                    "complement": {
+                        "description": "Additional address information.",
+                        "type": "string",
+                        "example": "Apt 3B"
+                    },
+                    "neighborhood": {
+                        "description": "Neighborhood where the person resides.",
+                        "type": "string",
+                        "example": "Downtown"
+                    },
+                    "city": {
+                        "description": "City where the person resides.",
+                        "type": "string",
+                        "example": "New York"
+                    },
+                    "state": {
+                        "description": "State where the person resides.",
+                        "type": "string",
+                        "example": "NY"
+                    },
+                    "supplier": {
+                        "$ref": "#/components/schemas/Supplier"
+                    }
+                },
+                "type": "object"
+            },
+            "Supplier": {
+                "title": "Supplier",
+                "description": "Represents a supplier in the system.",
+                "required": [
+                    "type",
+                    "company_industry"
+                ],
+                "properties": {
+                    "id": {
+                        "description": "Unique identifier of the supplier.",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "type": {
+                        "description": "Type of the supplier. Example: 'Pessoa Física' or 'Pessoa Jurídica'.",
+                        "type": "string",
+                        "example": "Pessoa Física"
+                    },
+                    "company_industry": {
+                        "description": "Industry of the supplier's company.",
+                        "type": "string",
+                        "example": "Retail"
+                    },
+                    "person_id": {
+                        "description": "ID of the related Person if the type is 'Pessoa Física'.",
+                        "type": "integer",
+                        "example": 2
+                    },
+                    "legal_entity_id": {
+                        "description": "ID of the related LegalEntity if the type is 'Pessoa Jurídica'.",
+                        "type": "integer",
+                        "example": 3
+                    },
+                    "person": {
+                        "$ref": "#/components/schemas/Person"
+                    },
+                    "legalEntity": {
+                        "$ref": "#/components/schemas/LegalEntity"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Suppliers",
+            "description": "Operations related to suppliers management"
+        }
+    ]
+}
