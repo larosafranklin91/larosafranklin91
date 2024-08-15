@@ -1,0 +1,75 @@
+# PUT http://localhost:8250/api/supplier/11 HTTP/1.1
+# Accept: application/json
+# Content-Type: application/json
+# 
+# {
+#     "name": "IRMAOS SOUZA LTDA",
+#     "type": "Pessoa Jurídica",
+#     "cnpj": "91235678870001",
+#     "cpf": "",
+#     "company_industry": "Consultoria Em Teste",
+#     "phone": "47977665500",
+#     "address": "Rua Dois",
+#     "cep": "39100111",
+#     "number": "55",
+#     "complement": "Apto 202",
+#     "neighborhood": "Santo Amaro",
+#     "city": "Maringá",
+#     "state": "PR"
+# }
+
+
+GET http://localhost:8250/api/supplier?filter_by=name&filter_value=IRMAOS&order_by=cnpj&direction=asc HTTP/1.1
+Accept: application/json
+Content-Type: application/json
+
+# GET http://localhost:8250/api/supplier/11 HTTP/1.1
+# Accept: application/json
+# Content-Type: application/json
+
+# DELETE http://localhost:8250/api/supplier/9 HTTP/1.1
+# Accept: application/json
+# Content-Type: application/json
+
+# POST http://localhost:8250/api/supplier/13 HTTP/1.1
+# Accept: application/json
+# Content-Type: application/json
+
+# {
+#     "name": "TRES IRMAOS LTDA",
+#     "type": "Pessoa Jurídica",
+#     "cnpj": "91235678870001",
+#     "cpf": "",
+#     "company_industry": "Consultoria Em Design",
+#     "phone": "47977665500",
+#     "address": "Rua Dois",
+#     "cep": "39100111",
+#     "number": "55",
+#     "complement": "Apto 202",
+#     "neighborhood": "Santo Amaro",
+#     "city": "Maringá",
+#     "state": "PR"
+# }
+
+
+
+# POST http://localhost:8250/api/supplier/13 HTTP/1.1
+# Accept: application/json
+# Content-Type: application/json
+
+# {
+#     "name": "TRES IRMAOS LTDA",
+#     "type": "Pessoa Jurídica",
+#     "cnpj": "91235678870001",
+#     "cpf": "",
+#     "company_industry": "Consultoria Em Design",
+#     "phone": "47977665500",
+#     "address": "Rua Dois",
+#     "cep": "39100111",
+#     "number": "55",
+#     "complement": "Apto 202",
+#     "neighborhood": "Santo Amaro",
+#     "city": "Maringá",
+#     "state": "PR"
+# }
+
