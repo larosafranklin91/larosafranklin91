@@ -18,7 +18,7 @@ class LegalEntityFactory extends Factory
     {
         return [
             'name' => $this->faker->name(),
-            'cnpj' => $this->faker->numerify('#############'),
+            'cnpj' => $this->faker->numerify('##############'),
             'phone' => $this->faker->numerify('###########'),
             'address' => $this->faker->address(),
             'cep' => $this->faker->numerify('########'),
