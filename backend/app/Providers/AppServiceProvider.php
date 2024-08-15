@@ -2,6 +2,9 @@
 
 namespace App\Providers;
 
+use App\Repositories\EloquentRepository;
+use App\Repositories\Repository;
+use Illuminate\Http\Resources\Json\JsonResource;
 use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
@@ -19,6 +22,11 @@ class AppServiceProvider extends ServiceProvider
      */
     public function boot(): void
     {
-        //
+        JsonResource::withoutWrapping();
+        $this->app->bind(Repository::class, function () {
+            return new Repository(
+                new EloquentRepository()
+            );
+        });
     }
 }
