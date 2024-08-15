@@ -1,54 +1,99 @@
-## Teste para Desenvolvedor PHP/Laravel
+# Api REST Cadastro Fornecedores Laravel
 
-Bem-vindo ao teste de desenvolvimento para a posição de Desenvolvedor PHP/Laravel. 
-
-O objetivo deste teste é desenvolver uma API Rest para o cadastro de fornecedores, permitindo a busca por CNPJ ou CPF, utilizando Laravel no backend.
-
-## Descrição do Projeto
-
-### Backend (API Laravel):
-
-#### CRUD de Fornecedores:
-- **Criar Fornecedor:**
-  - Permita o cadastro de fornecedores usando CNPJ ou CPF, incluindo informações como nome/nome da empresa, contato, endereço, etc.
-  - Valide a integridade e o formato dos dados, como o formato correto de CNPJ/CPF e a obrigatoriedade de campos.
-
-- **Editar Fornecedor:**
-  - Facilite a atualização das informações de fornecedores, mantendo a validação dos dados.
-
-- **Excluir Fornecedor:**
-  - Possibilite a remoção segura de fornecedores.
-
-- **Listar Fornecedores:**
-  - Apresente uma lista paginada de fornecedores, com filtragem e ordenação.
-
-#### Migrations:
-- Utilize migrations do Laravel para definir a estrutura do banco de dados, garantindo uma boa organização e facilidade de manutenção.
+Este projeto é uma aplicação web desenvolvida usando Laravel para o para o desenvolvimento de uma api rest que permite o cadastro e a busca de fornecedores.
 
 ## Requisitos
 
-### Backend:
-- Implementar busca por CNPJ na [BrasilAPI](https://brasilapi.com.br/docs#tag/CNPJ/paths/~1cnpj~1v1~1{cnpj}/get) ou qualquer outro endpoint público.
+- PHP 8.3
+- MySQL 8
+- Composer
+- Laravel 11.x
+- Docker & Docker Compose
 
-## Tecnologias a serem utilizadas
-- Framework Laravel (PHP) 9.x ou superior
-- MySQL ou Postgres
-
-## Critérios de Avaliação
-- Adesão aos requisitos funcionais e técnicos.
-- Qualidade do código, incluindo organização, padrões de desenvolvimento e segurança.
-- Documentação do projeto, incluindo um README detalhado com instruções de instalação e operação.
-
-## Bônus
-- Implementação de Repository Pattern.
-- Implementação de testes automatizados.
-- Dockerização do ambiente de desenvolvimento.
-- Implementação de cache para otimizar o desempenho.
-
-## Entrega
-- Para iniciar o teste, faça um fork deste repositório; Se você apenas clonar o repositório não vai conseguir fazer push.
-- Crie uma branch com o nome que desejar;
-- Altere o arquivo README.md com as informações necessárias para executar o seu teste (comandos, migrations, seeds, etc);
-- Depois de finalizado, envie-nos o pull request;
+## Estrutura do Projeto
 
 
+- `/docker-compose.yml`: Contém o código para a composição dos serviços docker (Servidor Web e Banco).
+- `/DOCKERFILE`: Contém o código para definição da Imagem do conteiner do Servidor Web.
+- `/httpd.conf`: Arquivo de Configuração do Apache, que e injetado no container do Servidor durante o Build.
+- `/supervisord.conf`: Arquivo de configuração do Supervisor, que é o gerenciador de inicializaçao que adotei para Linux Alpine (distro base da imagem).
+  - `app/`: Contém o código backend do Laravel.
+    - `Services/`: Contém as classes da camada de Serviço
+    - `Repositories/`: Contém as classes da camada de Acesso aos Dados
+    - `Dto/`: Contém as Classes de Mapeamento Negócio/Persistência
+  - `database/seeders/`: Contém os seeders para popular o banco de dados.
+- `database/`: É o diretório onde está mapeado o banco de dados, para garantir a persistência dos dados, caso o container do mysql caia.
+
+## Funcionalidades
+
+- Cadastro de Fornecedores
+- Listagem de Fornecedores, com Ordenação e Filtragem
+- Atualização de Cadastro de Fornecedores
+- Remoção de Cadastro de Fornecedor
+
+## Tecnologias Utilizadas
+
+- Laravel 11.x
+- Vue.js 3.x
+- MySQL 8
+- PHP 8.3
+
+## Configuração do Projeto
+
+### 1. Clone o Repositório
+
+```bash
+git clone https://github.com/JoseLucasAquino/teste-dev-php.git
+```
+
+### 2. Faça o Build do Ambiente Docker
+```bash
+docker compose up -d 
+```
+
+### 3. Instale as Dependências do PHP
+
+```bash
+docker compose exec supplier-server composer install
+```
+
+### 4. Configure o Banco de Dados
+
+## Altere o arquivo /backend/.env conforme o exemplo
+
+```makefile
+DB_CONNECTION=mysql
+DB_HOST=supplier-db
+DB_PORT=3306
+DB_DATABASE=supplier
+DB_USERNAME=supplier
+DB_PASSWORD=supplier
+```
+
+### 5. Execute as migrations do Banco de Dados
+
+```bash
+docker compose exec supplier-server php artisan migrate
+```
+
+### 6. Gere o Seed do Banco de Dados
+
+```bash
+docker compose exec supplier-server php artisan db:seed
+```
+
+### 7. Acesse a api
+
+O sistema estará disponível em http://localhost:8250.
+
+### 8. Documentação Api(Swagger)
+
+A documentalção estará disponível em http://localhost:8250/api/documentation.
+
+## 9. Gerar Assets da Documentação
+
+Caso seja necessário, para gerar novamente os assets da documentação, execute:
+
+```bash
+docker compose exec supplier-server php artisan l5-swagger:generate
+```
