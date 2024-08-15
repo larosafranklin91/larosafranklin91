@@ -28,9 +28,18 @@ class SupplierController extends Controller
      *     summary="List all suppliers",
      *     tags={"Suppliers"},
      *     @OA\Parameter(
-     *         name="filter",
+     *         name="filter_by",
      *         in="query",
-     *         description="Filter suppliers by criteria",
+     *         description="Filter suppliers by column",
+     *         required=false,
+     *         @OA\Schema(
+     *             type="string"
+     *         )
+     *     ),
+     *     @OA\Parameter(
+     *         name="filter_value",
+     *         in="query",
+     *         description="Filter suppliers value",
      *         required=false,
      *         @OA\Schema(
      *             type="string"

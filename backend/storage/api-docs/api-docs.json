@@ -25,9 +25,18 @@
                 "operationId": "43efd859bdde27a9e53c0afbe0891731",
                 "parameters": [
                     {
-                        "name": "filter",
+                        "name": "filter_by",
                         "in": "query",
-                        "description": "Filter suppliers by criteria",
+                        "description": "Filter suppliers by column",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter_value",
+                        "in": "query",
+                        "description": "Filter suppliers value",
                         "required": false,
                         "schema": {
                             "type": "string"
