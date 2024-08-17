@@ -1,54 +1,143 @@
-## Teste para Desenvolvedor PHP/Laravel
+# Projeto Fornecedores
 
-Bem-vindo ao teste de desenvolvimento para a posição de Desenvolvedor PHP/Laravel. 
+Este é um projeto Laravel para gerenciar fornecedores com funcionalidades de CRUD e visualização em uma DataTable. 
+Este README fornecerá informações sobre como configurar e executar o projeto.
 
-O objetivo deste teste é desenvolver uma API Rest para o cadastro de fornecedores, permitindo a busca por CNPJ ou CPF, utilizando Laravel no backend.
+## Tecnologias utilizadas
 
-## Descrição do Projeto
+- Framework Laravel (PHP) 11.20.0
+- MySQL
 
-### Backend (API Laravel):
+## Configuração
 
-#### CRUD de Fornecedores:
-- **Criar Fornecedor:**
-  - Permita o cadastro de fornecedores usando CNPJ ou CPF, incluindo informações como nome/nome da empresa, contato, endereço, etc.
-  - Valide a integridade e o formato dos dados, como o formato correto de CNPJ/CPF e a obrigatoriedade de campos.
+1. **Clone o repositório**
 
-- **Editar Fornecedor:**
-  - Facilite a atualização das informações de fornecedores, mantendo a validação dos dados.
+    ```bash
+    git clone https://github.com/alluke96/teste-dev-php.git
+    cd teste-dev-php
+    ```
 
-- **Excluir Fornecedor:**
-  - Possibilite a remoção segura de fornecedores.
+2. **Instale as dependências do PHP**
 
-- **Listar Fornecedores:**
-  - Apresente uma lista paginada de fornecedores, com filtragem e ordenação.
+    ```bash
+    composer install
+    ```
 
-#### Migrations:
-- Utilize migrations do Laravel para definir a estrutura do banco de dados, garantindo uma boa organização e facilidade de manutenção.
+3. **Crie o arquivo `.env`**
 
-## Requisitos
+    Copie o arquivo `.env.example` para `.env`:
 
-### Backend:
-- Implementar busca por CNPJ na [BrasilAPI](https://brasilapi.com.br/docs#tag/CNPJ/paths/~1cnpj~1v1~1{cnpj}/get) ou qualquer outro endpoint público.
+    ```bash
+    cp .env.example .env
+    ```
 
-## Tecnologias a serem utilizadas
-- Framework Laravel (PHP) 9.x ou superior
-- MySQL ou Postgres
+4. **Configure o arquivo `.env`**
 
-## Critérios de Avaliação
-- Adesão aos requisitos funcionais e técnicos.
-- Qualidade do código, incluindo organização, padrões de desenvolvimento e segurança.
-- Documentação do projeto, incluindo um README detalhado com instruções de instalação e operação.
+    Edite o arquivo `.env` para configurar o banco de dados e outras variáveis. Exemplo de configuração para MySQL:
 
-## Bônus
-- Implementação de Repository Pattern.
-- Implementação de testes automatizados.
-- Dockerização do ambiente de desenvolvimento.
-- Implementação de cache para otimizar o desempenho.
+    ```env
+    DB_CONNECTION=mysql
+    DB_HOST=127.0.0.1
+    DB_PORT=3306
+    DB_DATABASE=nome_do_banco
+    DB_USERNAME=usuario
+    DB_PASSWORD=senha
+    ```
 
-## Entrega
-- Para iniciar o teste, faça um fork deste repositório; Se você apenas clonar o repositório não vai conseguir fazer push.
-- Crie uma branch com o nome que desejar;
-- Altere o arquivo README.md com as informações necessárias para executar o seu teste (comandos, migrations, seeds, etc);
-- Depois de finalizado, envie-nos o pull request;
+5. **Gere a chave de aplicação**
 
+    ```bash
+    php artisan key:generate
+    ```
 
+## Migrations e Seeds
+
+1. **Execute as migrations**
+
+    As migrations criam as tabelas necessárias no banco de dados.
+
+    ```bash
+    php artisan migrate
+    ```
+
+2. **Popule o banco de dados com seeds (opcional)**
+
+    Se você tiver interese em popular o banco de dados com dados iniciais, execute:
+
+    ```bash
+    php artisan db:seed
+    ```
+
+## Execução do Projeto
+
+1. **Inicie o servidor local**
+
+    ```bash
+    php artisan serve
+    ```
+
+    O aplicativo estará acessível em `http://127.0.0.1:8000`.
+
+## Execução de testes automatizados
+
+1. **Execução dos testes**
+
+    Para executar os testes automatizados, utilize o seguinte comando:
+
+    ```bash
+    php artisan test
+    ```
+
+    O Laravel executará todos os testes disponíveis na pasta `tests/`. Verifique os resultados para garantir que todas as funcionalidades estejam funcionando conforme esperado.
+
+## Funcionalidades do Sistema
+
+Este sistema permite que você gerencie fornecedores de forma eficiente. Abaixo, você encontrará um guia sobre como utilizar as principais funcionalidades do sistema.
+
+### 1. **Filtrar e Ordenar Fornecedores**
+
+Na página principal, você verá uma tabela listando todos os fornecedores cadastrados. Para facilitar a navegação e localização de fornecedores específicos, você pode:
+
+- **Filtrar:** No topo de cada coluna, há um campo de entrada onde você pode digitar um termo de pesquisa para filtrar os resultados. Por exemplo, você pode digitar um nome, CPF/CNPJ, ou qualquer outra informação relevante.
+
+- **Ordenar:** Clique no cabeçalho de uma coluna para ordenar os resultados. Um clique ordena em ordem ascendente, e outro clique ordena em ordem descendente.
+
+### 2. **Adicionar um Novo Fornecedor**
+
+Para adicionar um novo fornecedor:
+
+- Clique no botão **Adicionar Fornecedor**, localizado no canto superior direito da página.
+- Um modal será aberto, onde você poderá preencher as informações do fornecedor, como nome, CPF ou CNPJ, endereço e contatos.
+- Você pode adicionar mais de um contato clicando no botão **Adicionar Contato** dentro do modal.
+- Após preencher todas as informações, clique em **Salvar** para adicionar o novo fornecedor ao sistema.
+
+### 3. **Editar um Fornecedor**
+
+Para editar um fornecedor existente:
+
+- Na tabela de fornecedores, localize o fornecedor que deseja editar.
+- Clique no botão **Editar** ao lado do fornecedor.
+- Um modal será aberto com os campos já preenchidos com as informações atuais do fornecedor.
+- Faça as alterações desejadas, incluindo a possibilidade de adicionar ou remover contatos.
+- Clique em **Salvar** para atualizar as informações do fornecedor.
+
+### 4. **Excluir um Fornecedor**
+
+Para excluir um fornecedor:
+
+- Na tabela de fornecedores, localize o fornecedor que deseja excluir.
+- Clique no botão **Excluir** ao lado do fornecedor.
+- Uma caixa de confirmação será exibida, solicitando a confirmação da remoção.
+- Confirme a exclusão para prosseguir.
+
+**Nota sobre Remoção Segura:** Ao excluir um fornecedor, o sistema não remove o registro do banco de dados de forma permanente. Em vez disso, o campo **ativo** do fornecedor será definido como `false`, garantindo uma **remoção segura**. Isso significa que o fornecedor não aparecerá mais nas listagens ativas, mas suas informações ainda estarão disponíveis no banco de dados para referência futura, caso necessário.
+
+### 5. **Pesquisar por CNPJ**
+
+Na hora de cadastrar ou editar um fornecedor, você tem a opção de pesquisar as informações de um CNPJ diretamente usando a API BrasilAPI.
+
+- No modal de adição ou edição de fornecedor, insira o CNPJ no campo correspondente.
+- Clique no ícone de pesquisa ao lado do campo de CNPJ.
+- O sistema buscará automaticamente as informações do CNPJ inserido e preencherá os campos de endereço com os dados retornados pela API.
+
+Essa funcionalidade agiliza o processo de cadastro e garante que as informações sejam precisas e atualizadas.

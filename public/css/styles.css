@@ -1,0 +1,29 @@
+label.required::after {
+    content: " *";
+    color: red;
+}
+
+#fornecedores-table thead tr th * {
+    display: flex;
+    flex-direction: column;
+}
+
+.modal-body {
+    position: relative;
+    overflow-y: auto;
+    max-height: 80vh;
+}
+
+.modal-header, .modal-footer {
+    position: sticky;
+    z-index: 10;
+    background-color: #fff;
+}
+
+.modal-header {
+    top: 0;
+}
+
+.modal-footer {
+    bottom: 0;
+}
