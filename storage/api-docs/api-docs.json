@@ -1,0 +1,249 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "API de Fornecedores",
+        "description": "Teste de PHP da Revenda Mais",
+        "contact": {
+            "email": "allyson.dunke@gmail.com"
+        },
+        "license": {
+            "name": "MIT",
+            "url": "https://opensource.org/licenses/MIT"
+        },
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/api/fornecedores": {
+            "get": {
+                "tags": [
+                    "Fornecedores"
+                ],
+                "summary": "Retorna uma lista paginada de fornecedores",
+                "description": "Retorna uma lista de fornecedores com filtros opcionais e ordenação",
+                "operationId": "c95c1584606cb20afd445b96466d087b",
+                "parameters": [
+                    {
+                        "name": "filter_value",
+                        "in": "query",
+                        "description": "Valor a ser filtrado",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "filter_by",
+                        "in": "query",
+                        "description": "Campo pelo qual o filtro será aplicado",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "nome",
+                                "cpf",
+                                "cnpj",
+                                "logradouro",
+                                "telefone",
+                                "email"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "order_by",
+                        "in": "query",
+                        "description": "Campo pelo qual a ordenação será aplicada",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "nome",
+                                "cpf",
+                                "cnpj"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "direction",
+                        "in": "query",
+                        "description": "Direção da ordenação (asc ou desc)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "asc",
+                                "desc"
+                            ]
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Lista de fornecedores retornada com sucesso",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Fornecedor"
+                                            }
+                                        },
+                                        "current_page": {
+                                            "type": "integer"
+                                        },
+                                        "last_page": {
+                                            "type": "integer"
+                                        },
+                                        "per_page": {
+                                            "type": "integer"
+                                        },
+                                        "total": {
+                                            "type": "integer"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "400": {
+                        "description": "Erro de validação"
+                    },
+                    "500": {
+                        "description": "Erro no servidor"
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Contato": {
+                "title": "Contato",
+                "description": "Modelo que representa um contato associado a um fornecedor",
+                "properties": {
+                    "id": {
+                        "description": "ID do contato",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "email": {
+                        "description": "Email do contato",
+                        "type": "string",
+                        "example": "contato@empresa.com"
+                    },
+                    "telefone": {
+                        "description": "Telefone do contato",
+                        "type": "string",
+                        "example": "11987654321"
+                    },
+                    "fornecedor_id": {
+                        "description": "ID do fornecedor associado a este contato",
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "fornecedor": {
+                        "$ref": "#/components/schemas/Fornecedor"
+                    }
+                },
+                "type": "object"
+            },
+            "Endereco": {
+                "title": "Endereço",
+                "description": "Modelo que representa um endereço",
+                "properties": {
+                    "id": {
+                        "description": "ID do endereço",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "logradouro": {
+                        "description": "Logradouro do endereço",
+                        "type": "string",
+                        "example": "Rua das Flores"
+                    },
+                    "numero": {
+                        "description": "Número do endereço",
+                        "type": "string",
+                        "example": "123"
+                    },
+                    "complemento": {
+                        "description": "Complemento do endereço",
+                        "type": "string",
+                        "example": "Apto 45"
+                    },
+                    "bairro": {
+                        "description": "Bairro do endereço",
+                        "type": "string",
+                        "example": "Centro"
+                    },
+                    "cidade": {
+                        "description": "Cidade do endereço",
+                        "type": "string",
+                        "example": "São Paulo"
+                    },
+                    "uf": {
+                        "description": "Unidade Federativa (UF) do endereço",
+                        "type": "string",
+                        "example": "SP"
+                    },
+                    "cep": {
+                        "description": "CEP do endereço",
+                        "type": "string",
+                        "example": "01001000"
+                    }
+                },
+                "type": "object"
+            },
+            "Fornecedor": {
+                "title": "Fornecedor",
+                "description": "Modelo que representa um fornecedor",
+                "properties": {
+                    "id": {
+                        "description": "ID do fornecedor",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "nome": {
+                        "description": "Nome do fornecedor",
+                        "type": "string",
+                        "example": "Empresa XYZ"
+                    },
+                    "cpf": {
+                        "description": "CPF do fornecedor (apenas para pessoas físicas)",
+                        "type": "string",
+                        "example": "12345678901"
+                    },
+                    "cnpj": {
+                        "description": "CNPJ do fornecedor (apenas para pessoas jurídicas)",
+                        "type": "string",
+                        "example": "12345678000195"
+                    },
+                    "endereco_id": {
+                        "description": "ID do endereço associado ao fornecedor",
+                        "type": "integer",
+                        "example": 10
+                    },
+                    "endereco": {
+                        "$ref": "#/components/schemas/Endereco"
+                    },
+                    "contatos": {
+                        "description": "Lista de contatos associados ao fornecedor",
+                        "type": "array",
+                        "items": {
+                            "$ref": "#/components/schemas/Contato"
+                        }
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Fornecedores",
+            "description": "Fornecedores"
+        }
+    ]
+}

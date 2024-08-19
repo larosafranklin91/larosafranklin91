@@ -78,6 +78,8 @@ Este README fornecerá informações sobre como configurar e executar o projeto.
 
     O aplicativo estará acessível em `http://127.0.0.1:8000`.
 
+    A documentação estará disponível em `http://127.0.0.1:8000/api/documentation`.
+
 ## Execução de testes automatizados
 
 1. **Execução dos testes**

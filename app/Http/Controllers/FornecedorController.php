@@ -89,6 +89,81 @@ class FornecedorController extends Controller
             ->make(true);
     }
 
+/**
+ * @OA\Get(
+ *     path="/api/fornecedores",
+ *     summary="Retorna uma lista paginada de fornecedores",
+ *     description="Retorna uma lista de fornecedores com filtros opcionais e ordenação",
+ *     tags={"Fornecedores"},
+ *     @OA\Parameter(
+ *         name="filter_value",
+ *         in="query",
+ *         description="Valor a ser filtrado",
+ *         required=false,
+ *         @OA\Schema(type="string")
+ *     ),
+ *     @OA\Parameter(
+ *         name="filter_by",
+ *         in="query",
+ *         description="Campo pelo qual o filtro será aplicado",
+ *         required=false,
+ *         @OA\Schema(type="string", enum={"nome", "cpf", "cnpj", "logradouro", "telefone", "email"})
+ *     ),
+ *     @OA\Parameter(
+ *         name="order_by",
+ *         in="query",
+ *         description="Campo pelo qual a ordenação será aplicada",
+ *         required=false,
+ *         @OA\Schema(type="string", enum={"nome", "cpf", "cnpj"})
+ *     ),
+ *     @OA\Parameter(
+ *         name="direction",
+ *         in="query",
+ *         description="Direção da ordenação (asc ou desc)",
+ *         required=false,
+ *         @OA\Schema(type="string", enum={"asc", "desc"})
+ *     ),
+ *     @OA\Response(
+ *         response=200,
+ *         description="Lista de fornecedores retornada com sucesso",
+ *         @OA\JsonContent(
+ *             type="object",
+ *             @OA\Property(property="data", type="array",
+ *                 @OA\Items(ref="#/components/schemas/Fornecedor")
+ *             ),
+ *             @OA\Property(property="current_page", type="integer"),
+ *             @OA\Property(property="last_page", type="integer"),
+ *             @OA\Property(property="per_page", type="integer"),
+ *             @OA\Property(property="total", type="integer")
+ *         )
+ *     ),
+ *     @OA\Response(
+ *         response=400,
+ *         description="Erro de validação"
+ *     ),
+ *     @OA\Response(
+ *         response=500,
+ *         description="Erro no servidor"
+ *     )
+ * )
+ */
+    public function getFornecedoresList(Request $request)
+    {
+        // Extraindo os parâmetros de filtro, ordenação e paginação da request
+        $params = [
+            'filter_value' => $request->input('filter_value'),
+            'filter_by' => $request->input('filter_by'),
+            'order_by' => $request->input('order_by'),
+            'direction' => $request->input('direction'),
+        ];
+
+        // Obtendo os fornecedores paginados através do repositório
+        $fornecedores = $this->fornecedorRepository->getFornecedoresList($params);
+
+        // Retornando a resposta em JSON para ser usada na API ou em uma view
+        return response()->json($fornecedores);
+    }
+
     public function store(Request $request)
     {
         $data = $this->validateAndNormalize($request);
