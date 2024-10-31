@@ -57,10 +57,11 @@ Siga os passos abaixo para configurar o projeto:
    `docker-compose up --build`
    
    Execute o seguinte comando dentro do container web do docker:
-   `php artisan db:migrate --seed`
+   `docker exec web composer install`
+   `docker exec web php artisan migrate --seed`
    
    Execute o seguinte para rodar os testes:
-   `php artisan test`
+   `docker exec web php artisan test`
 
    Isso iniciará o servidor (porta 3306) e os serviços necessários para o projeto.
 
