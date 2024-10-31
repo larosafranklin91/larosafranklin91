@@ -16,7 +16,7 @@ return new class extends Migration
             $table->string('supplier_name');
             $table->string('identity_document', 14)->unique();
             $table->string('email');
-            $table->number('supply_cep', 8);
+            $table->string('supply_cep', 8);
             $table->string('supply_city');
             $table->string('supply_state');
             $table->string('supply_address');

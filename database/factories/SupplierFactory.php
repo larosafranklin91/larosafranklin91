@@ -33,7 +33,7 @@ class SupplierFactory extends Factory
             'supply_state' => fake('pt_BR')->stateAbbr,
             'supply_address' => fake('pt_BR')->streetName,
             'supply_address_complement' => fake('pt_BR')->buildingNumber,
-            'phone' => fake('pt_BR')->cellphoneNumber,
+            'phone' => preg_replace('/[()\- ]/', '', fake('pt_BR')->cellphoneNumber),
             'birthdate' => $typePerson === 'F' ? fake()->dateTimeBetween('-80 years', '-20 years') : null,
             'type_person' => $typePerson,
         ];
