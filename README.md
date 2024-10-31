@@ -23,15 +23,17 @@ Siga os passos abaixo para configurar o projeto:
 
    `cd teste-dev-php`
 
-3. **Crie um arquivo `.env`:**
+   `﻿git checkout teste-gustavo`
+
+4. **Crie um arquivo `.env`:**
 
    Copie o arquivo `.env.example` para `.env`:
 
    `cp .env.example .env`
 
-4. **Configure as variáveis de ambiente no `.env`:**
+5. **Configure as variáveis de ambiente no `.env`:**
 
-   Adicione as configurações do banco de dados.
+   Confirme as configurações do banco de dados (deixei as credenciais no example para facilitar).
 
    ```
    DB_CONNECTION=mysql
@@ -42,13 +44,13 @@ Siga os passos abaixo para configurar o projeto:
    DB_PASSWORD=root
    ```
    
-   Adicione a variável da documentação do swagger.
+   Confirme a variável da documentação do swagger.
 
    ```
    L5_SWAGGER_CONST_HOST=http://localhost/api/
    ```
 
-5. **Inicie o Docker:**
+6. **Inicie o Docker:**
 
    Execute o seguinte comando para construir e iniciar os contêineres:
 
