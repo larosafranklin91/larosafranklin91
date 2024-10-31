@@ -1,54 +1,77 @@
-## Teste para Desenvolvedor PHP/Laravel
+# 🛠️ Documentação API RevendaMais
 
-Bem-vindo ao teste de desenvolvimento para a posição de Desenvolvedor PHP/Laravel. 
+Esta API foi construída usando **Laravel 11**, **PHP 8.2** e **MySQL 5.7**. Siga as instruções abaixo para configurar e executar o projeto em seu ambiente local. 🚀
 
-O objetivo deste teste é desenvolver uma API Rest para o cadastro de fornecedores, permitindo a busca por CNPJ ou CPF, utilizando Laravel no backend.
+Ambiente de desenvolvimento: **MacBook M1**
 
-## Descrição do Projeto
+## 📋 Pré-requisitos
 
-### Backend (API Laravel):
+Antes de começar, você precisará ter o seguinte instalado em sua máquina:
 
-#### CRUD de Fornecedores:
-- **Criar Fornecedor:**
-  - Permita o cadastro de fornecedores usando CNPJ ou CPF, incluindo informações como nome/nome da empresa, contato, endereço, etc.
-  - Valide a integridade e o formato dos dados, como o formato correto de CNPJ/CPF e a obrigatoriedade de campos.
+- **Docker** 🐳
+- **MySQL** (5.7 ou superior) 📦
 
-- **Editar Fornecedor:**
-  - Facilite a atualização das informações de fornecedores, mantendo a validação dos dados.
+## ⚙️ Configuração do Ambiente
 
-- **Excluir Fornecedor:**
-  - Possibilite a remoção segura de fornecedores.
+Siga os passos abaixo para configurar o projeto:
 
-- **Listar Fornecedores:**
-  - Apresente uma lista paginada de fornecedores, com filtragem e ordenação.
+1. **Clone o repositório:**
 
-#### Migrations:
-- Utilize migrations do Laravel para definir a estrutura do banco de dados, garantindo uma boa organização e facilidade de manutenção.
+   `git clone https://github.com/gumaath/teste-dev-php.git`
 
-## Requisitos
+2. **Navegue até o diretório do projeto:**
 
-### Backend:
-- Implementar busca por CNPJ na [BrasilAPI](https://brasilapi.com.br/docs#tag/CNPJ/paths/~1cnpj~1v1~1{cnpj}/get) ou qualquer outro endpoint público.
+   `cd teste-dev-php`
 
-## Tecnologias a serem utilizadas
-- Framework Laravel (PHP) 9.x ou superior
-- MySQL ou Postgres
+3. **Crie um arquivo `.env`:**
 
-## Critérios de Avaliação
-- Adesão aos requisitos funcionais e técnicos.
-- Qualidade do código, incluindo organização, padrões de desenvolvimento e segurança.
-- Documentação do projeto, incluindo um README detalhado com instruções de instalação e operação.
+   Copie o arquivo `.env.example` para `.env`:
 
-## Bônus
-- Implementação de Repository Pattern.
-- Implementação de testes automatizados.
-- Dockerização do ambiente de desenvolvimento.
-- Implementação de cache para otimizar o desempenho.
+   `cp .env.example .env`
 
-## Entrega
-- Para iniciar o teste, faça um fork deste repositório; Se você apenas clonar o repositório não vai conseguir fazer push.
-- Crie uma branch com o nome que desejar;
-- Altere o arquivo README.md com as informações necessárias para executar o seu teste (comandos, migrations, seeds, etc);
-- Depois de finalizado, envie-nos o pull request;
+4. **Configure as variáveis de ambiente no `.env`:**
 
+   Adicione as configurações do banco de dados.
 
+   ```
+   DB_CONNECTION=mysql
+   DB_HOST=db
+   DB_PORT=3306
+   DB_DATABASE=laravel
+   DB_USERNAME=root
+   DB_PASSWORD=root
+   ```
+   
+   Adicione a variável da documentação do swagger.
+
+   ```
+   L5_SWAGGER_CONST_HOST=http://localhost/api/
+   ```
+
+5. **Inicie o Docker:**
+
+   Execute o seguinte comando para construir e iniciar os contêineres:
+
+   `docker-compose up --build`
+   
+   Execute o seguinte comando dentro do container web do docker:
+   `php artisan db:migrate --seed`
+   
+   Execute o seguinte para rodar os testes:
+   `php artisan test`
+
+   Isso iniciará o servidor (porta 3306) e os serviços necessários para o projeto.
+
+## 🌐 Acessando a Aplicação
+
+Após a inicialização, você pode acessar a aplicação no seguinte link:
+
+- [http://localhost:8000](http://localhost:8000) 🌍
+
+## 📖 Documentação da API
+
+Para acessar a documentação da API, visite:
+
+- [Documentação da API](http://127.0.0.1:8000/api/documentation) 📚
+
+🎊 **Espero que o teste supra as expectativas! Agradeço a oportunidade desde já** 🎊

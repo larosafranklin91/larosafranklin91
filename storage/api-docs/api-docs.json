@@ -1,0 +1,695 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Documentação API Fornecedores",
+        "description": "Essa API permite gerenciar fornecedores, incluindo criar, atualizar, e recuperação dos dados, respeitando os requisitos do teste.",
+        "version": "1.0.0"
+    },
+    "servers": [
+        {
+            "url": "http://localhost:8000/api/v1"
+        }
+    ],
+    "paths": {
+        "/suppliers": {
+            "get": {
+                "tags": [
+                    "Suppliers"
+                ],
+                "summary": "Obter todos os fornecedores",
+                "description": "Retorna todos os fornecedores cadastrados.",
+                "operationId": "getAllSuppliers",
+                "parameters": [
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Quantos registros por página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Qual página deseja visualizar",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    },
+                    {
+                        "name": "type_person",
+                        "in": "query",
+                        "description": "Tipo de pessoa (física ou jurídica)",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "enum": [
+                                "F",
+                                "J"
+                            ]
+                        }
+                    },
+                    {
+                        "name": "supply_city",
+                        "in": "query",
+                        "description": "Cidade de fornecimento",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    },
+                    {
+                        "name": "supply_state",
+                        "in": "query",
+                        "description": "Estado de fornecimento",
+                        "required": false,
+                        "schema": {
+                            "type": "string",
+                            "maxLength": 2
+                        }
+                    },
+                    {
+                        "name": "supplier_name",
+                        "in": "query",
+                        "description": "Nome do fornecedor",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Retorna a lista de fornecedores",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Supplier"
+                                            }
+                                        },
+                                        "current_page": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "total_pages": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "total_items": {
+                                            "type": "integer",
+                                            "example": 1
+                                        },
+                                        "per_page": {
+                                            "type": "integer",
+                                            "example": 10
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro interno do servidor."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "post": {
+                "tags": [
+                    "Suppliers"
+                ],
+                "summary": "Cria um novo fornecedor",
+                "description": "Armazena o fornecedor no banco de dados.",
+                "operationId": "storeSupplier",
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "required": [
+                                    "supplier_name",
+                                    "identity_document",
+                                    "email",
+                                    "supply_cep",
+                                    "supply_address_complement",
+                                    "phone"
+                                ],
+                                "properties": {
+                                    "supplier_name": {
+                                        "type": "string",
+                                        "example": "Nome do Fornecedor"
+                                    },
+                                    "identity_document": {
+                                        "description": "CPF ou CNPJ",
+                                        "type": "string",
+                                        "example": "09018331937"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "supplier@example.com"
+                                    },
+                                    "supply_cep": {
+                                        "type": "string",
+                                        "example": "82540230"
+                                    },
+                                    "supply_address_complement": {
+                                        "type": "string",
+                                        "example": "123"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "41984653641"
+                                    },
+                                    "birthday": {
+                                        "description": "Data de nascimento (apenas se for pessoa física)",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2002-08-20"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "201": {
+                        "description": "O fornecedor é criado e adicionado ao banco de dados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Fornecedor criado com sucesso!"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "$ref": "#/components/schemas/Supplier"
+                                            }
+                                        },
+                                        "current_page": {
+                                            "type": "number",
+                                            "example": 1
+                                        },
+                                        "total_pages": {
+                                            "type": "number",
+                                            "example": 20
+                                        },
+                                        "total_items": {
+                                            "type": "number",
+                                            "example": 250
+                                        },
+                                        "per_page": {
+                                            "type": "number",
+                                            "example": 10
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Ocorreu algum erro na validação dos dados",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Ocorreu um erro durante a validação dos dados. Consulte a documentação."
+                                        },
+                                        "errors": {
+                                            "type": "object",
+                                            "additionalProperties": {
+                                                "type": "array",
+                                                "items": {
+                                                    "type": "string",
+                                                    "example": "The field has already been taken."
+                                                }
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/suppliers/{supplier}": {
+            "get": {
+                "tags": [
+                    "Suppliers"
+                ],
+                "summary": "Obter fornecedor por ID",
+                "description": "Retorna os detalhes de um fornecedor específico.",
+                "operationId": "e42b820652a12dc9ae60bd30dd37d650",
+                "parameters": [
+                    {
+                        "name": "supplier",
+                        "in": "path",
+                        "description": "ID do fornecedor",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fornecedor encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Supplier"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Fornecedor não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Fornecedor não encontrado."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro interno do servidor."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "put": {
+                "tags": [
+                    "Suppliers"
+                ],
+                "summary": "Atualiza as informações do fornecedor",
+                "description": "Atualiza as informações de um fornecedor no banco de dados.",
+                "operationId": "updateSupplier",
+                "parameters": [
+                    {
+                        "name": "supplier",
+                        "in": "path",
+                        "description": "ID do fornecedor que vai ser atualizado",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    },
+                    {
+                        "name": "per_page",
+                        "in": "query",
+                        "description": "Quantos registros por página",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 10
+                        }
+                    },
+                    {
+                        "name": "page",
+                        "in": "query",
+                        "description": "Qual página deseja visualizar",
+                        "required": false,
+                        "schema": {
+                            "type": "integer",
+                            "default": 1
+                        }
+                    }
+                ],
+                "requestBody": {
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "properties": {
+                                    "supplier_name": {
+                                        "type": "string",
+                                        "example": "Nome do Fornecedor"
+                                    },
+                                    "identity_document": {
+                                        "description": "CPF ou CNPJ",
+                                        "type": "string",
+                                        "example": "09018331937"
+                                    },
+                                    "email": {
+                                        "type": "string",
+                                        "format": "email",
+                                        "example": "supplier@example.com"
+                                    },
+                                    "supply_cep": {
+                                        "type": "string",
+                                        "example": "82540230"
+                                    },
+                                    "supply_address_complement": {
+                                        "type": "string",
+                                        "example": "123"
+                                    },
+                                    "phone": {
+                                        "type": "string",
+                                        "example": "41984653641"
+                                    },
+                                    "birthday": {
+                                        "description": "Data de nascimento (apenas se for pessoa física)",
+                                        "type": "string",
+                                        "format": "date",
+                                        "example": "2002-08-20"
+                                    }
+                                },
+                                "type": "object"
+                            }
+                        }
+                    }
+                },
+                "responses": {
+                    "200": {
+                        "description": "Fornecedor é atualizado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Fornecedor atualizado com sucesso!!"
+                                        },
+                                        "data": {
+                                            "$ref": "#/components/schemas/Supplier"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Fornecedor não encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Fornecedor não encontrado."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "422": {
+                        "description": "Erro nas validações",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "errors": {
+                                            "type": "array",
+                                            "items": {
+                                                "type": "string"
+                                            }
+                                        },
+                                        "message": {
+                                            "type": "string",
+                                            "example": "O campo de e-mail deve ser um formato válido."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            },
+            "delete": {
+                "tags": [
+                    "Suppliers"
+                ],
+                "summary": "Remover um fornecedor de forma segura",
+                "description": "Ao deletar um fornecedor, ele permanecerá no banco de dados, mas não aparecerá nos registros",
+                "operationId": "deleteSupplier",
+                "parameters": [
+                    {
+                        "name": "supplier",
+                        "in": "path",
+                        "description": "ID do fornecedor que vai ser removido",
+                        "required": true,
+                        "schema": {
+                            "type": "integer"
+                        }
+                    }
+                ],
+                "responses": {
+                    "204": {
+                        "description": "Fornecedor é removido"
+                    },
+                    "404": {
+                        "description": "Fornecedor não encontrado.",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Fornecedor não encontrado."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/suppliers/document/{document}": {
+            "get": {
+                "tags": [
+                    "Suppliers"
+                ],
+                "summary": "Obter fornecedor por número de documento (CPF ou CNPJ)",
+                "description": "Retorna os detalhes de um fornecedor específico.",
+                "operationId": "getSupplierByDocument",
+                "parameters": [
+                    {
+                        "name": "document",
+                        "in": "path",
+                        "description": "Número do documento",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        }
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "Fornecedor encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "data": {
+                                            "$ref": "#/components/schemas/Supplier"
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "404": {
+                        "description": "Fornecedor não encontrado",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Fornecedor não encontrado."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    },
+                    "500": {
+                        "description": "Erro interno do servidor",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "message": {
+                                            "type": "string",
+                                            "example": "Erro interno do servidor."
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    },
+    "components": {
+        "schemas": {
+            "Supplier": {
+                "properties": {
+                    "id": {
+                        "description": "Identificador único do fornecedor",
+                        "type": "integer",
+                        "example": 1
+                    },
+                    "supplier_name": {
+                        "description": "Nome do fornecedor",
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Fornecedor XYZ"
+                    },
+                    "identity_document": {
+                        "description": "Número do documento (CPF ou CNPJ) do fornecedor",
+                        "type": "string",
+                        "maxLength": 14,
+                        "minLength": 11,
+                        "example": "12345678900"
+                    },
+                    "email": {
+                        "description": "E-mail do fornecedor",
+                        "type": "string",
+                        "format": "email",
+                        "maxLength": 255,
+                        "example": "fornecedor@example.com"
+                    },
+                    "supply_cep": {
+                        "description": "CEP do local de faturamento do fornecedor",
+                        "type": "string",
+                        "maxLength": 8,
+                        "minLength": 8,
+                        "example": "82520120"
+                    },
+                    "supply_city": {
+                        "description": "Cidade do Fornecedor",
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Curitiba"
+                    },
+                    "supply_state": {
+                        "description": "Estado do Fornecedor",
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "Paraná"
+                    },
+                    "supply_address": {
+                        "description": "Rua do Fornecedor",
+                        "type": "string",
+                        "maxLength": 255,
+                        "example": "R. José de Alencar"
+                    },
+                    "supply_address_complement": {
+                        "description": "Número e complemento do local do fornecedor",
+                        "type": "string",
+                        "maxLength": 20,
+                        "example": "123-A"
+                    },
+                    "phone": {
+                        "description": "Telefone ou celular do fornecedor",
+                        "type": "string",
+                        "maxLength": 11,
+                        "minLength": 10,
+                        "example": "41984653641"
+                    },
+                    "birthdate": {
+                        "description": "Data de nascimento do fornecedor (caso seja CPF)",
+                        "type": "string",
+                        "format": "date",
+                        "example": "2002-08-20"
+                    },
+                    "type_person": {
+                        "description": "Tipo de Pessoa (Física ou Júridica)",
+                        "type": "enum('F, J')",
+                        "example": "F"
+                    },
+                    "created_at": {
+                        "description": "Data e hora de criação do fornecedor",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-30T19:48:04.000000Z"
+                    },
+                    "update_at": {
+                        "description": "Data e hora de atualização do fornecedor",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-30T19:48:04.000000Z"
+                    },
+                    "deleted_at": {
+                        "description": "Data e hora de remoção do fornecedor",
+                        "type": "string",
+                        "format": "date-time",
+                        "example": "2024-10-30T19:48:04.000000Z"
+                    }
+                },
+                "type": "object"
+            }
+        }
+    },
+    "tags": [
+        {
+            "name": "Suppliers",
+            "description": "Controller responsável por manipular os dados dos fornecedores."
+        }
+    ]
+}
