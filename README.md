@@ -54,3 +54,43 @@ Para realizar os testes, siga o passo a passo:
 4. Para rodar os testes, utilize o comando:
     ```bash
    php artisan test
+
+## Como rodar com docker
+
+1. Execute o comando para rodar com o docker:
+    ```bash
+   docker-compose up -d --build
+
+2. Atualize o .env com os dados do banco de dados configurados no docker
+    ```bash
+    DB_CONNECTION=mysql
+    DB_HOST=db
+    DB_PORT=3306
+    DB_DATABASE=teste_php
+    DB_USERNAME=root
+    DB_PASSWORD=rootpassword
+
+3. Para abrir o terminal do laravel no docker, execute o comando:
+    ```bash
+    docker exec -it laravel_app bash
+
+4. Rode a migration para o projeto:
+    ```bash
+    php artisan migrate
+
+5. Atualize o .env.testing com os dados do banco de dados configurados no docker para testes
+    ```bash
+    DB_CONNECTION=mysql
+    DB_HOST=db
+    DB_PORT=3306
+    DB_DATABASE=teste_php_testing
+    DB_USERNAME=root
+    DB_PASSWORD=rootpassword
+
+6. Para executar os testes automatizados, rode as migrations para testes:
+    ```bash
+    php artisan migrate --env=testing
+
+7. Execute os testes do laravel:
+    ```bash
+    php artisan test
