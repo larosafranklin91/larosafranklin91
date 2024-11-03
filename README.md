@@ -18,7 +18,7 @@ A API conta com rotas para cadastro do usuário, login e CRUD para os fornecedor
    ```bash
    composer install
 
-4. Duplique o .env.example e atualize as configurações do banco de dados:
+4. Duplique o .env.example alterando o arquivo para apenas .env e atualize as configurações do banco de dados
 
 5. Para rodar o projeto, execute:
    ```bash
@@ -28,13 +28,17 @@ A API conta com rotas para cadastro do usuário, login e CRUD para os fornecedor
    ```bash
    php artisan migrate
 
-7. Se desejar utilizar POSTMAN para os testes, na pasta /docs existe uma coleção do POSTMAN em formato JSON, importe no POSTMAN para realizar os testes por la.
-
 
 ## Autenticação
 
 Para autenticação na API, é necessário utilizar o token retornado após LOGIN e enviar como Bearer Token.
 
+
+## POSTMAN
+
+Se desejar utilizar POSTMAN para os testes, na pasta /docs existe uma coleção do POSTMAN em formato JSON, importe no POSTMAN para realizar os testes por la.
+
+1. Ao utilizar o POSTMAN, após o LOGIN é necessário atualizar a váriavel {{AUTHENTICATION_TOKEN}} da coleção com o TOKEN retornado da API.
 
 ## Testes automatizados
 
