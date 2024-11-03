@@ -28,7 +28,6 @@ A API conta com rotas para cadastro do usuário, login e CRUD para os fornecedor
    ```bash
    php artisan migrate
 
-
 ## Autenticação
 
 Para autenticação na API, é necessário utilizar o token retornado após LOGIN e enviar como Bearer Token.
