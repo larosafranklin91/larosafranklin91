@@ -1,0 +1,39 @@
+version: '3.8'
+
+services:
+  # Serviço para o banco de dados PostgreSQL
+  db:
+    image: postgres:latest
+    container_name: postgres_db
+    environment:
+      POSTGRES_USER: teste   # Substitua pelo usuário desejado
+      POSTGRES_PASSWORD: teste   # Substitua pela senha desejada
+      POSTGRES_DB: teste   # Substitua pelo nome do banco de dados desejado
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    ports:
+      - "5432:5432"   # Porta padrão do PostgreSQL
+
+  # Serviço para o PHP 8.1 com extensões pgsql
+  php:
+    build: .                       # Usa o Dockerfile na raiz do projeto
+    container_name: php_app
+    volumes:
+      - ./:/var/www/html        # Monte o código da aplicação aqui
+    depends_on:
+      - db
+
+  # Serviço para o NGINX
+  nginx:
+    image: nginx:latest
+    container_name: nginx_server
+    ports:
+      - "3000:80"   # Porta padrão do NGINX
+    volumes:
+      - ./app:/var/www/html                    # Monte o código da aplicação aqui
+      - ./nginx.conf:/etc/nginx/nginx.conf # Monte o arquivo de configuração do NGINX diretamente
+    depends_on:
+      - php
+
+volumes:
+  db_data:
