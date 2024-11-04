@@ -1,6 +1,4 @@
-# Nome do Projeto
-
-Descrição breve do projeto, seus objetivos e funcionalidades.
+# Teste Revenda Mais
 
 ## Pré-requisitos
 
