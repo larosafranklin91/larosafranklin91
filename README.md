@@ -16,7 +16,7 @@ Observação: o comando acima irá parar e remover todos os containers ativos, e
 
 4. Acesse o container do projeto:
 ```bash
-docker exec -it larabel.test bash
+docker exec -it laravel.test bash
 ```
 
 5. Rode o comando para instalar as dependências do projeto:
