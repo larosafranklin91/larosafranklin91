@@ -1,66 +1,139 @@
-<p align="center"><a href="https://laravel.com" target="_blank"><img src="https://raw.githubusercontent.com/laravel/art/master/logo-lockup/5%20SVG/2%20CMYK/1%20Full%20Color/laravel-logolockup-cmyk-red.svg" width="400" alt="Laravel Logo"></a></p>
+# Projeto de API Laravel
 
-<p align="center">
-<a href="https://github.com/laravel/framework/actions"><img src="https://github.com/laravel/framework/workflows/tests/badge.svg" alt="Build Status"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/dt/laravel/framework" alt="Total Downloads"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/v/laravel/framework" alt="Latest Stable Version"></a>
-<a href="https://packagist.org/packages/laravel/framework"><img src="https://img.shields.io/packagist/l/laravel/framework" alt="License"></a>
-</p>
+Este projeto é uma API construída com Laravel, projetada para gerenciar fornecedores. A API oferece diversas rotas para operações CRUD e testes.
 
-## About Laravel
+## Índice
 
-Laravel is a web application framework with expressive, elegant syntax. We believe development must be an enjoyable and creative experience to be truly fulfilling. Laravel takes the pain out of development by easing common tasks used in many web projects, such as:
+- [Requisitos](#requisitos)
+- [Instalação](#instalação)
+- [Configuração do Ambiente](#configuração-do-ambiente)
+- [Configuração do Banco de Dados](#configuração-do-banco-de-dados)
+- [Rotas da API](#rotas-da-api)
+- [Testando as Rotas](#testando-as-rotas)
+- [Contribuição](#contribuição)
+- [Licença](#licença)
 
-- [Simple, fast routing engine](https://laravel.com/docs/routing).
-- [Powerful dependency injection container](https://laravel.com/docs/container).
-- Multiple back-ends for [session](https://laravel.com/docs/session) and [cache](https://laravel.com/docs/cache) storage.
-- Expressive, intuitive [database ORM](https://laravel.com/docs/eloquent).
-- Database agnostic [schema migrations](https://laravel.com/docs/migrations).
-- [Robust background job processing](https://laravel.com/docs/queues).
-- [Real-time event broadcasting](https://laravel.com/docs/broadcasting).
+## Requisitos
 
-Laravel is accessible, powerful, and provides tools required for large, robust applications.
+Antes de começar, você precisará de:
 
-## Learning Laravel
+- PHP 8.0 ou superior
+- Composer
+- Um servidor web (como Apache ou Nginx)
+- SQLite (ou outro banco de dados configurado)
 
-Laravel has the most extensive and thorough [documentation](https://laravel.com/docs) and video tutorial library of all modern web application frameworks, making it a breeze to get started with the framework.
+## Instalação
 
-You may also try the [Laravel Bootcamp](https://bootcamp.laravel.com), where you will be guided through building a modern Laravel application from scratch.
+1. **Clone o repositório**:
+   ```bash
+   git clone https://github.com/C1ph3rBR/teste_php.git
+   cd teste_php
+   ```
 
-If you don't feel like reading, [Laracasts](https://laracasts.com) can help. Laracasts contains thousands of video tutorials on a range of topics including Laravel, modern PHP, unit testing, and JavaScript. Boost your skills by digging into our comprehensive video library.
+2. **Instale as dependências do Laravel**:
+   ```bash
+   composer install
+   ```
 
-## Laravel Sponsors
+3. **Crie o arquivo `.env`**:
+   Copie o arquivo `.env.example` para `.env`:
+   ```bash
+   cp .env.example .env
+   ```
 
-We would like to extend our thanks to the following sponsors for funding Laravel development. If you are interested in becoming a sponsor, please visit the [Laravel Partners program](https://partners.laravel.com).
+4. **Gere a chave da aplicação**:
+   Execute o comando abaixo para gerar a chave da aplicação:
+   ```bash
+   php artisan key:generate
+   ```
 
-### Premium Partners
+5. **Crie o banco de dados SQLite** (se utilizar SQLite):
+   Crie um arquivo vazio chamado `database.sqlite` em uma pasta selecionada:
+   ```bash
+   mkdir -p database
+   touch database/database.sqlite
+   ```
 
-- **[Vehikl](https://vehikl.com/)**
-- **[Tighten Co.](https://tighten.co)**
-- **[WebReinvent](https://webreinvent.com/)**
-- **[Kirschbaum Development Group](https://kirschbaumdevelopment.com)**
-- **[64 Robots](https://64robots.com)**
-- **[Curotec](https://www.curotec.com/services/technologies/laravel/)**
-- **[Cyber-Duck](https://cyber-duck.co.uk)**
-- **[DevSquad](https://devsquad.com/hire-laravel-developers)**
-- **[Jump24](https://jump24.co.uk)**
-- **[Redberry](https://redberry.international/laravel/)**
-- **[Active Logic](https://activelogic.com)**
-- **[byte5](https://byte5.de)**
-- **[OP.GG](https://op.gg)**
+## Configuração do Ambiente
 
-## Contributing
+O arquivo `.env` já está configurado com as seguintes definições:
 
-Thank you for considering contributing to the Laravel framework! The contribution guide can be found in the [Laravel documentation](https://laravel.com/docs/contributions).
+```env
+APP_NAME=Laravel
+APP_ENV=local
+APP_KEY=base64:Bv+Qx2BlVQHQkCIRG48DqPFn9fXJZKZCWhFgCcAdtY4=
+APP_DEBUG=true
+APP_TIMEZONE=UTC
+APP_URL=http://localhost
 
-## Code of Conduct
+DB_CONNECTION=sqlite
+DB_DATABASE= #usar a pasta selecionda no topico 5 
+```
 
-In order to ensure that the Laravel community is welcoming to all, please review and abide by the [Code of Conduct](https://laravel.com/docs/contributions#code-of-conduct).
+Verifique se essas configurações atendem às suas necessidades.
 
-## Security Vulnerabilities
+## Configuração do Banco de Dados
 
-If you discover a security vulnerability within Laravel, please send an e-mail to Taylor Otwell via [taylor@laravel.com](mailto:taylor@laravel.com). All security vulnerabilities will be promptly addressed.
+### Usando SQLite
 
-## License
+Para usar o SQLite, certifique-se de que o caminho do banco de dados está correto no arquivo `.env`. Você pode criar um arquivo SQLite vazio se ele ainda não existir:
 
-The Laravel framework is open-sourced software licensed under the [MIT license](https://opensource.org/licenses/MIT).
+```bash
+mkdir -p database
+touch database/database.sqlite
+```
+
+### Usando MySQL ou outro banco de dados
+
+Se você preferir usar MySQL ou outro banco de dados, ajuste as seguintes configurações no arquivo `.env`:
+
+```env
+DB_CONNECTION=mysql
+DB_HOST=127.0.0.1
+DB_PORT=3306
+DB_DATABASE=nome_do_banco
+DB_USERNAME=usuario
+DB_PASSWORD=senha
+```
+
+Certifique-se de ter o driver do banco de dados correspondente instalado. Para MySQL, você pode instalar o driver executando:
+
+```bash
+composer require doctrine/dbal
+```
+
+### Dependências
+
+Se você não tem o SQLite instalado, você pode instalá-lo usando:
+
+- **Linux**: `sudo apt-get install sqlite3`
+- **macOS**: `brew install sqlite`
+
+## Rotas da API
+
+As seguintes rotas estão disponíveis na API:
+
+- `GET /api/fornecedores` - Lista todos os fornecedores.
+- `GET /api/teste` - Rota de teste para verificar se a API está funcionando.
+- `POST /api/fornecedores` - Cria um novo fornecedor.
+- `PUT /api/fornecedores/{id}` - Atualiza um fornecedor existente.
+- `DELETE /api/fornecedores/{id}` - Exclui um fornecedor.
+- `GET /api/fornecedores/buscar-cnpj/{cnpj}` - Busca um fornecedor pelo CNPJ.
+
+### Rotas de Teste
+
+- `POST /api/fornecedores/teste-criar` - Testa a criação de um fornecedor.
+- `PUT /api/fornecedores/teste-editar/{id}` - Testa a edição de um fornecedor.
+- `DELETE /api/fornecedores/teste-excluir/{id}` - Testa a exclusão de um fornecedor.
+- `GET /api/fornecedores/teste-buscar-cnpj/{cnpj}` - Testa a busca de um fornecedor pelo CNPJ.
+
+## Testando as Rotas
+
+Você pode usar ferramentas como Postman ou Insomnia para testar as rotas da API. Certifique-se de que o servidor esteja em execução. Você pode iniciar o servidor de desenvolvimento do Laravel com o comando:
+
+```bash
+php artisan serve
+```
+
+Depois, você poderá acessar a API em `http://localhost:8000/api/`.
+
